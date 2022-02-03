@@ -1,5 +1,4 @@
 #include <iostream>
-#include "dataExtractor.h"
 #include "erroneousDetection.h"
 
 int main(int argc, const char** argv) {
