@@ -5,16 +5,6 @@
 #include <string>
 #include <fstream>
 
-struct StreamData {
-    double epoch, lastEpoch;
-    double duration, lastDuration;
-};
-
-struct NodeData {
-    unsigned int ID;
-    StreamData data[2];
-};
-
 struct SensorData {
     unsigned int ID, cowID, signalStrength, cloudRecieveTime, batteryLevel, streamID;
     int latency;

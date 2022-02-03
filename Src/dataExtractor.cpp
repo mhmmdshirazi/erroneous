@@ -29,11 +29,6 @@ bool Csv::readCsvLine(SensorData* sensorData)
             return false;
         }
 
-        for (int i = 0 ; i < 12 ; i++) {
-            std::cout<<i<<" "<<row[i] << std::endl;
-        }
-
-        std::cout <<std::endl;
         sensorData->ID = stoul(row[0]);
         sensorData->cowID = stoul(row[1]);
         sensorData->epoch = stod(row[2]);

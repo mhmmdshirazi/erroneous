@@ -6,7 +6,7 @@ TARGET := Connecterra
 SRCFILES := $(shell find $(SRC) -type f -name "*.cpp" )
 OBJ := $(patsubst %, $(BUILD)/%, $(notdir $(SRCFILES:.cpp=.o)))
 CFLAGS := -Wall -I$(INC)
-CC:= g++
+CC:= g++ -std=c++11
 
 $(BUILD)/$(TARGET) : $(OBJ)
 	$(CC) -o $(TARGET) $(OBJ)
