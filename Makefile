@@ -14,6 +14,8 @@ $(BUILD)/$(TARGET) : $(OBJ)
 $(BUILD)/%.o : $(SRC)/%.cpp
 	@mkdir -p $(BUILD)
 	$(CC) $(CFLAGS) -c $< -o $@
-	
-help: 
-	@echo $(SRC)
+
+.PHONY: clean
+
+clean:
+	rm -rf build
