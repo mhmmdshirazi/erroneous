@@ -11,7 +11,7 @@ ErroneousDetection::~ErroneousDetection()
     delete csvHandler;
 }
 
-//Detect if the line contains data for a new node
+// Detect if the line contains data for a new node 
 bool ErroneousDetection::isANewNode(unsigned int ID)
 {
     if (std::any_of(uniqueNodes.begin(), uniqueNodes.end(), [=](const NodeData nodeData)
@@ -22,6 +22,7 @@ bool ErroneousDetection::isANewNode(unsigned int ID)
     return true;
 }
 
+//Convert row data to needed data for erroneous detection
 void ErroneousDetection::convertSensorDataToNodeData(SensorData sensorData)
 {
     NodeData receivedNodeData;
@@ -37,6 +38,7 @@ void ErroneousDetection::convertSensorDataToNodeData(SensorData sensorData)
     uniqueNodes.push_back(receivedNodeData);
 }
 
+// Calculate erroneous gaps and overlaps in the data
 void ErroneousDetection::calculateGapAndOverlap(unsigned int nodeIndex, SensorData sensorData)
 {
     double expectedEpoch = uniqueNodes[nodeIndex].data[sensorData.streamID - 2].lastEpoch + uniqueNodes[nodeIndex].data[sensorData.streamID - 2].lastDuration;
@@ -52,6 +54,7 @@ void ErroneousDetection::calculateGapAndOverlap(unsigned int nodeIndex, SensorDa
     uniqueNodes[nodeIndex].data[sensorData.streamID - 2].lastDuration = sensorData.duration;
 }
 
+// Read csv file conver to node data and calculate sum of gaps and overlaps
 void ErroneousDetection::detect(void)
 {
     SensorData receivedData;
@@ -59,7 +62,6 @@ void ErroneousDetection::detect(void)
     {
         if (isANewNode(receivedData.ID))
         {
-
             convertSensorDataToNodeData(receivedData);
         }
         else
@@ -80,8 +82,10 @@ void ErroneousDetection::detect(void)
             }
         }
     }
-    std::cout << std::endl;
+
+    csvHandler->createOutputFile();
     for(auto a: uniqueNodes) {
+        csvHandler->writeLine(a.ID,a.gapSum[0],a.overlapSum[0],a.gapSum[1],a.overlapSum[1]);
         std::cout<<a.ID<<" "<<a.gapSum[0]<<" "<<a.overlapSum[0]<<" "<<a.gapSum[1]<<" "<<a.overlapSum[1]<< std::endl;
     }
 }

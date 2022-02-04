@@ -3,11 +3,11 @@
 
 //Defines and Includes
 #include <vector>
-#include "csvHandler.h""
+#include "csvHandler.h"
 
 struct StreamData {
-    double epoch, lastEpoch;
-    double duration, lastDuration;
+    double lastEpoch;
+    double lastDuration;
     bool isReceived;
 };
 
